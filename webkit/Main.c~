@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
 {
 	gtk_init(&argc, &argv);
 	init_gtk();
-	gtk_main();
 	return 0;
 }
 
