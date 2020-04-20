@@ -1,5 +1,8 @@
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
+#include <stdio.h>
+#include <unistd.h>
+
 GtkWidget *init_gtk(char *filename)
 {
 	GtkWidget *window;
@@ -15,10 +18,21 @@ GtkWidget *init_gtk(char *filename)
 
 int main(int argc, char *argv[])
 {
-	gtk_init(&argc, &argv);
     char *filename = argv[1];
-    printf("%s\n", filename);
-    GtkWidget *window = init_gtk(filename);
+		char fullpath[sizeof(filename)];
+		sprintf(fullpath, "%s;", filename);
+		//getcwd
+		char pwd[1024];
+		getcwd(pwd, sizeof(pwd));
+		printf("cwd : %s\n", pwd);
+
+		//add
+		char fpath[1000];
+		sprintf(fpath, "file://%s/%s",pwd, argv[1]);
+		printf("%s\n", fpath);
+
+		gtk_init(&argc, &argv);
+		GtkWidget *window = init_gtk(fpath);
     gtk_widget_show_all(window);
 
 	gtk_main();
