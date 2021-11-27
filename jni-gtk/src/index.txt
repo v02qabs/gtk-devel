@@ -1,2 +1,0 @@
-There is written by Hirotake.
-They code is about jni of c language.
