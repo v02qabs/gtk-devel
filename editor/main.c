@@ -1,14 +1,16 @@
 #include <gtk/gtk.h>
 
-
+#include <stdio.h>
 
 void button_clicked(GtkWidget *widget, gpointer data)
 {
-	const gchar *text;
-	text = gtk_entry_get_text(GTK_ENTRY(data));
-	g_print("clicked : %s\n", text);
-}
 
+	const char *txt;
+	GtkEntry *entry = (GtkEntry*)data;
+	txt = gtk_entry_get_text(entry);
+	printf("data = %s\n", txt);
+		
+}
 
 
 int main(int argc, char *argv[])
@@ -27,8 +29,10 @@ int main(int argc, char *argv[])
 	text_area = gtk_entry_new();
 	gtk_box_pack_start(GTK_BOX(vbox),text_area, TRUE,TRUE,0);
 	button = gtk_button_new_with_label("SHOW");
-	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE,FALSE, 0);
-	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(button_clicked), &text_area);
+	gtk_box_pack_start(GTK_BOX(vbox), button, TRUE,TRUE, 0);
+	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(button_clicked),
+		G_OBJECT(text_area));
+	
 	save = gtk_button_new_with_label("quit");
 	gtk_box_pack_start(GTK_BOX(vbox),save, TRUE,TRUE, 0); 
 	gtk_widget_show_all(window);
